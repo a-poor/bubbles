@@ -201,3 +201,70 @@ func (tg *textGrid) setCharacterAt(i, j int, c rune) {
 	}
 	tg.data[i][j] = c
 }
+
+// clearLineAt will remove all the characters in
+// the i-th line.
+//
+// Note: If i is out of bounds, clearLineAt
+// will panic.
+func (tg *textGrid) clearLineAt(i int) {
+	// Bounds check the input
+	n := tg.length()
+	if i < 0 || i >= n {
+		err := fmt.Errorf("index %d out of bounds for grid of length %d", i, n)
+		panic(err)
+	}
+
+	// Set i-th line to empty slice
+	tg.data[i] = make([]rune, 0)
+}
+
+// deleteLineAt deletes the i-th line of the textGrid,
+// shrinking the length by 1.
+//
+// Note: If i is out of bounds, deleteLineAt
+// will panic.
+//
+// Also note: If the textGrid is empty, this method
+// is a no-op.
+func (tg *textGrid) deleteLineAt(i int) {
+	// Bounds check the input
+	n := tg.length()
+	if i < 0 || i >= n {
+		err := fmt.Errorf("index %d out of bounds for grid of length %d", i, n)
+		panic(err)
+	}
+
+	// If the textGrid is empty, do nothing
+	if n == 0 {
+		return
+	}
+
+	d2 := make([][]rune, n-1, 0)
+	for idx := 0; idx < n; idx++ {
+		// Up to the i-th line, copy directly
+		if idx < i {
+			d2[idx] = tg.data[idx]
+			continue
+		}
+		// Skip line i...
+
+		// After the i-th line, shift left
+		if idx > i {
+			d2[idx-1] = tg.data[idx]
+		}
+	}
+
+	// Set the result
+}
+
+// deleteCharAt deletes the j-th character in the
+// i-th line of the textGrid.
+//
+// This method effectively acts as a backspace key
+// and therefore has some special cases. The general
+// behavior is as follows:
+// - if regular, delete char (i, j) and shift the rest left
+// - if i == 0 && j == 0, do nothing
+// - if i != 0 && j == 0, delete the "line break" between lines i and i-1
+func (tg *textGrid) deleteCharAt(i, j int)
