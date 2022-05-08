@@ -25,7 +25,7 @@ func newTextGrid() *textGrid {
 // seeded with data in string s.
 func textGridFromString(s string) *textGrid {
 	lines := strings.Split(s, "\n")
-	d := make([][]rune, len(lines), 0)
+	d := make([][]rune, len(lines))
 	for i, l := range lines {
 		d[i] = []rune(l)
 	}
@@ -37,9 +37,9 @@ func textGridFromString(s string) *textGrid {
 // String converts a textGrid to its string
 // representation.
 func (tg *textGrid) String() string {
-	var lines []string
-	for _, l := range tg.data {
-		lines = append(lines, string(l))
+	lines := make([]string, len(tg.data))
+	for i, l := range tg.data {
+		lines[i] = string(l)
 	}
 	return strings.Join(lines, "\n")
 }
@@ -273,4 +273,6 @@ func (tg *textGrid) deleteLineAt(i int) {
 // - if regular, delete char (i, j) and shift the rest left
 // - if i == 0 && j == 0, do nothing
 // - if i != 0 && j == 0, delete the "line break" between lines i and i-1
-func (tg *textGrid) deleteCharAt(i, j int)
+func (tg *textGrid) deleteCharAt(i, j int) {
+
+}
