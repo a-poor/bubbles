@@ -5,8 +5,13 @@ import (
 	"strings"
 )
 
+// textGrid stores the grid of text.
+//
+// Character data is stored as a 2d slice of runes
+// where the outer slice is lines and the inner
+// slice is characters within the line.
 type textGrid struct {
-	data [][]rune
+	data [][]rune // Underlying slice of lines
 }
 
 // newTextGrid creates a new empty textGrid.
@@ -256,6 +261,7 @@ func (tg *textGrid) deleteLineAt(i int) {
 	}
 
 	// Set the result
+	tg.data = d2
 }
 
 // deleteCharAt deletes the j-th character in the
